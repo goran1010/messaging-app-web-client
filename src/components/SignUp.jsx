@@ -1,8 +1,11 @@
 import { useState } from "react";
 import styles from "../styles/SignUp.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+const VITE_URL = import.meta.env.VITE_URL || "http://localhost:3000";
 
 export default function SignUp() {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -16,8 +19,31 @@ export default function SignUp() {
   function handleConfirmPassword(e) {
     setConfirmPassword(e.target.value);
   }
-  function handleSubmit(e) {
-    e.preventDefault();
+  async function handleSubmit(e) {
+    try {
+      e.preventDefault();
+
+      const response = await fetch(`${VITE_URL}/auth/sign-up`, {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username,
+          password,
+          confirmPassword,
+        }),
+      });
+      const result = await response.json();
+
+      if (response.ok) {
+        navigate("/");
+      } else {
+        console.error(result);
+      }
+    } catch (err) {
+      console.error(err);
+      navigate("/");
+    }
   }
 
   return (
