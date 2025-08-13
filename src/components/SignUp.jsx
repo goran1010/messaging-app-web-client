@@ -1,10 +1,11 @@
 import { useState } from "react";
+import styles from "../styles/SignUp.module.css";
 import { Link } from "react-router-dom";
-import styles from "../styles/LogIn.module.css";
 
-export default function LogIn({ setUser }) {
+export default function SignUp() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   function handleUsername(e) {
     setUsername(e.target.value);
@@ -12,14 +13,17 @@ export default function LogIn({ setUser }) {
   function handlePassword(e) {
     setPassword(e.target.value);
   }
+  function handleConfirmPassword(e) {
+    setConfirmPassword(e.target.value);
+  }
   function handleSubmit(e) {
     e.preventDefault();
   }
 
   return (
-    <div className={styles["log-in"]}>
+    <main className={styles.main}>
       <form onSubmit={handleSubmit}>
-        <legend>Log in here: </legend>
+        <legend>Create account here: </legend>
         <div>
           <label htmlFor="username">Username: </label>
           <input
@@ -41,13 +45,22 @@ export default function LogIn({ setUser }) {
           />
         </div>
         <div>
-          <button>Log in</button>
+          <label htmlFor="confirm-password">Confirm Password: </label>
+          <input
+            type="password"
+            name="confirm-password"
+            id="confirm-password"
+            value={confirmPassword}
+            onChange={handleConfirmPassword}
+          />
+        </div>
+        <div>
+          <button>Sign up</button>
         </div>
       </form>
       <div>
-        <p>Don't have an account ?</p>
-        <Link to="/sign-up">Sign up</Link>
+        <Link to="/">Back to Home</Link>
       </div>
-    </div>
+    </main>
   );
 }

@@ -1,7 +1,7 @@
 import Root from "./Root";
 import ErrorPage from "./components/ErrorPage";
 import Home from "./components/Home";
-import Register from "./components/Register";
+import SignUp from "./components/SignUp";
 import Messages from "./components/Messages";
 import Groups from "./components/Groups";
 import Friends from "./components/Friends";
@@ -24,7 +24,7 @@ const routes = [
           { path: "/profile", element: <Profile /> },
         ],
       },
-      { path: "register", element: <Register /> },
+      { path: "sign-up", element: <SignUp /> },
     ],
   },
 ];
