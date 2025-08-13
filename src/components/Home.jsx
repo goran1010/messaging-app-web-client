@@ -1,8 +1,9 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useOutletContext } from "react-router-dom";
 import LogIn from "./LogIn";
 import styles from "../styles/Home.module.css";
 
-export default function Home({ user, setUser }) {
+export default function Home() {
+  const { user, setUser } = useOutletContext();
   if (!user) {
     return (
       <main className={styles["main-log-in"]}>
@@ -12,7 +13,7 @@ export default function Home({ user, setUser }) {
   }
   return (
     <main>
-      <Outlet context={(user, setUser)} />
+      <Outlet />
     </main>
   );
 }

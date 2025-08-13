@@ -37,12 +37,12 @@ export default function SignUp() {
 
       if (response.ok) {
         navigate("/");
+        console.log(result);
       } else {
         console.error(result);
       }
     } catch (err) {
       console.error(err);
-      navigate("/");
     }
   }
 
