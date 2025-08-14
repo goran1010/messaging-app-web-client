@@ -1,6 +1,7 @@
 import { Outlet, useOutletContext } from "react-router-dom";
 import LogIn from "./LogIn";
 import styles from "../styles/Home.module.css";
+import Navbar from "./Navbar";
 
 export default function Home() {
   const { user, setUser } = useOutletContext();
@@ -13,6 +14,7 @@ export default function Home() {
   }
   return (
     <main>
+      <Navbar />
       <Outlet />
     </main>
   );

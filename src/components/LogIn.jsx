@@ -21,6 +21,7 @@ export default function LogIn({ setUser }) {
       const response = await fetch(`${VITE_URL}/auth/log-in`, {
         method: "POST",
         mode: "cors",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           username,
