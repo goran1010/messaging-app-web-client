@@ -1,3 +1,88 @@
+import { useRef, useState } from "react";
+import { useOutletContext } from "react-router-dom";
+const VITE_URL = import.meta.env.VITE_URL || "http://localhost:3000";
+
 export default function Profile() {
-  return <div>Profile</div>;
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const { user } = useOutletContext();
+
+  const [preview, setPreview] = useState(null);
+
+  function handleImageChange(e) {
+    const file = e.target.files[0];
+    if (file) {
+      setPreview(URL.createObjectURL(file));
+    }
+  }
+
+  const image = useRef(null);
+
+  function handleFirstName(e) {
+    setFirstName(e.target.value);
+  }
+  function handleLastName(e) {
+    setLastName(e.target.value);
+  }
+
+  async function handleForm(e) {
+    e.preventDefault();
+
+    const form = new FormData();
+    form.append("userId", user.id);
+    form.append("firstName", firstName);
+    form.append("lastName", lastName);
+    form.append("image", image.current.files[0]);
+
+    const response = await fetch(`${VITE_URL}/auth/update-profile`, {
+      method: "PUT",
+      mode: "cors",
+      body: form,
+    });
+    const result = await response.json();
+    console.log(result);
+  }
+
+  return (
+    <div>
+      <header>
+        <img src={preview} alt="Profile image" />
+      </header>
+      <form onSubmit={handleForm} encType="multipart/form-data">
+        <div>
+          <label htmlFor="upload-image">Upload image: </label>
+          <input
+            type="file"
+            name="upload-image"
+            id="upload-image"
+            ref={image}
+            onChange={handleImageChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="first-name">First name: </label>
+          <input
+            type="text"
+            id="first-name"
+            name="first-name"
+            value={firstName}
+            onChange={handleFirstName}
+          />
+        </div>
+        <div>
+          <label htmlFor="last-name">Last name: </label>
+          <input
+            type="text"
+            id="last-name"
+            name="last-name"
+            value={lastName}
+            onChange={handleLastName}
+          />
+        </div>
+        <div>
+          <button>Update Profile</button>
+        </div>
+      </form>
+    </div>
+  );
 }

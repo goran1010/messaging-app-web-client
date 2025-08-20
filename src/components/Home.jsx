@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <main>
       <Navbar />
-      <Outlet />
+      <Outlet context={{ user }} />
     </main>
   );
 }
