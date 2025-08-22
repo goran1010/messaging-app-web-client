@@ -1,13 +1,43 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 const VITE_URL = import.meta.env.VITE_URL || "http://localhost:3000";
 
 export default function Profile() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const { user } = useOutletContext();
+  const { user, setUser } = useOutletContext();
 
   const [preview, setPreview] = useState(null);
+
+  async function handleLogOut() {
+    const response = await fetch(`${VITE_URL}/auth/log-out`, {
+      mode: "cors",
+      method: "GET",
+      credentials: "include",
+    });
+    const result = await response.json();
+    console.log(result);
+    if (response.ok) {
+      setUser(null);
+    }
+  }
+
+  useEffect(() => {
+    async function getProfileImage() {
+      const response = await fetch(
+        `${VITE_URL}/auth/profile-image?userId=${user.id}`,
+        {
+          method: "GET",
+          mode: "cors",
+        }
+      );
+      const profileImage = await response.json();
+      setPreview(profileImage);
+    }
+    if (user?.id) {
+      getProfileImage();
+    }
+  }, [user?.id]);
 
   function handleImageChange(e) {
     const file = e.target.files[0];
@@ -37,10 +67,14 @@ export default function Profile() {
     const response = await fetch(`${VITE_URL}/auth/update-profile`, {
       method: "PUT",
       mode: "cors",
+      credentials: "include",
       body: form,
     });
     const result = await response.json();
     console.log(result);
+    if (response.ok) {
+      setPreview(result.image.url);
+    }
   }
 
   return (
@@ -83,6 +117,9 @@ export default function Profile() {
           <button>Update Profile</button>
         </div>
       </form>
+      <div>
+        <button onClick={handleLogOut}>Log out</button>
+      </div>
     </div>
   );
 }
