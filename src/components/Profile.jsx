@@ -3,9 +3,9 @@ import { useOutletContext } from "react-router-dom";
 const VITE_URL = import.meta.env.VITE_URL || "http://localhost:3000";
 
 export default function Profile() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const { user, setUser } = useOutletContext();
+  const [firstName, setFirstName] = useState(user.userInfo?.firstName || "");
+  const [lastName, setLastName] = useState(user.userInfo?.lastName || "");
 
   const [preview, setPreview] = useState(null);
 
@@ -15,8 +15,7 @@ export default function Profile() {
       method: "GET",
       credentials: "include",
     });
-    const result = await response.json();
-    console.log(result);
+    await response.json();
     if (response.ok) {
       setUser(null);
     }
@@ -73,7 +72,7 @@ export default function Profile() {
     const result = await response.json();
     console.log(result);
     if (response.ok) {
-      setPreview(result.image.url);
+      setUser(result);
     }
   }
 

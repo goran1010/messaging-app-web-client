@@ -3,7 +3,7 @@ const VITE_URL = import.meta.env.VITE_URL || "http://localhost:3000";
 
 const AddFriend = forwardRef((props, ref) => {
   const [username, setUsername] = useState("");
-
+  const { setUser } = props;
   function handleUsername(e) {
     setUsername(e.target.value);
   }
@@ -14,7 +14,7 @@ const AddFriend = forwardRef((props, ref) => {
       { method: "PUT", mode: "cors", credentials: "include" }
     );
     const result = await response.json();
-    console.log(result);
+    setUser(result);
   }
 
   return (

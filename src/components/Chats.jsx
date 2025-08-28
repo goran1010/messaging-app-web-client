@@ -1,9 +1,9 @@
-import AddFriend from "./AddFriend";
+import AddChat from "./AddChat";
 import { useRef } from "react";
-import ShowFriends from "./ShowFriends";
+import ShowChats from "./ShowChats";
 import { useOutletContext } from "react-router-dom";
 
-export default function Friends() {
+export default function Chats() {
   const { user, setUser } = useOutletContext();
   const newFriendModal = useRef();
   function handleAddFriend() {
@@ -12,11 +12,11 @@ export default function Friends() {
 
   return (
     <div>
-      <AddFriend ref={newFriendModal} user={user} setUser={setUser} />
+      <AddChat ref={newFriendModal} user={user} setUser={setUser} />
       <header>
-        <button onClick={handleAddFriend}>Add friend</button>
+        <button onClick={handleAddFriend}>Add Chat</button>
       </header>
-      <ShowFriends user={user} setUser={setUser} />
+      <ShowChats user={user} setUser={setUser} />
     </div>
   );
 }
