@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const VITE_URL = import.meta.env.VITE_URL || "http://localhost:3000";
 
-export default function NewMessage({ chatId, currentUser, onNewMessage }) {
+export default function NewMessage({ chatId, onNewMessage, setUser }) {
   const [content, setContent] = useState("");
 
   async function handleSendMessage(e) {
@@ -17,11 +17,10 @@ export default function NewMessage({ chatId, currentUser, onNewMessage }) {
         body: JSON.stringify({ chatId, content }),
       });
 
-      const message = await response.json();
-      console.log(message);
+      const data = await response.json();
 
-      if (onNewMessage) onNewMessage(message);
-
+      if (onNewMessage) onNewMessage(data.message);
+      setUser(data.user);
       setContent("");
     } catch (err) {
       console.error("Failed to send message:", err);

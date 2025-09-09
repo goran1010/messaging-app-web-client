@@ -2,10 +2,9 @@ import NewMessage from "./NewMessage";
 import Message from "./Message";
 import { useState } from "react";
 
-export default function Chat({ chat, currentUser }) {
+export default function Chat({ chat, currentUser, setUser }) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState(chat.messages || []);
-  console.log(currentUser);
 
   const friend = chat.users.find((u) => u.id !== currentUser.id);
 
@@ -26,6 +25,7 @@ export default function Chat({ chat, currentUser }) {
           ))}
 
           <NewMessage
+            setUser={setUser}
             chatId={chat.id}
             currentUser={currentUser}
             onNewMessage={(msg) => setMessages((prev) => [...prev, msg])}
