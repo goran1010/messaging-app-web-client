@@ -6,6 +6,7 @@ import { useOutletContext } from "react-router-dom";
 export default function Chats() {
   const { user, setUser } = useOutletContext();
   const newFriendModal = useRef();
+
   function handleAddFriend() {
     newFriendModal.current.showModal();
   }

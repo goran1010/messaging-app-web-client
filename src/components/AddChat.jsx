@@ -9,11 +9,13 @@ const AddChat = forwardRef((props, ref) => {
     setFriend(e.target.value);
   }
 
-  async function handleStartChat() {
-    const response = await fetch(
-      `${VITE_URL}/api/add-friend?friend=${friend}`,
-      { method: "PUT", mode: "cors", credentials: "include" }
-    );
+  async function handleStartChat(e) {
+    e.preventDefault();
+    const response = await fetch(`${VITE_URL}/api/add-chat?friend=${friend}`, {
+      method: "PUT",
+      mode: "cors",
+      credentials: "include",
+    });
     const result = await response.json();
     setUser(result);
   }
