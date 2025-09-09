@@ -1,9 +1,13 @@
-import { useState } from "react";
+import NewMessage from "./NewMessage";
 import Message from "./Message";
+import { useState } from "react";
 
 export default function Chat({ chat, currentUser }) {
   const [isOpen, setIsOpen] = useState(false);
-  const friend = chat.users.find((user) => user.id !== currentUser.id);
+  const [messages, setMessages] = useState(chat.messages || []);
+  console.log(currentUser);
+
+  const friend = chat.users.find((u) => u.id !== currentUser.id);
 
   return (
     <div className="chat">
@@ -17,10 +21,15 @@ export default function Chat({ chat, currentUser }) {
 
       {isOpen && (
         <div className="chat-messages">
-          {chat.messages.length === 0 && <p>No messages yet</p>}
-          {chat.messages.map((msg) => (
+          {messages.map((msg) => (
             <Message key={msg.id} message={msg} currentUser={currentUser} />
           ))}
+
+          <NewMessage
+            chatId={chat.id}
+            currentUser={currentUser}
+            onNewMessage={(msg) => setMessages((prev) => [...prev, msg])}
+          />
         </div>
       )}
     </div>
