@@ -31,6 +31,7 @@ export default function Profile() {
         }
       );
       const profileImage = await response.json();
+
       setPreview(profileImage);
     }
     if (user?.id) {

@@ -28,7 +28,13 @@ const AddFriend = forwardRef((props, ref) => {
           onChange={handleUsername}
         />
         <menu>
-          <button value="cancel">Cancel</button>
+          <button
+            type="button"
+            value="cancel"
+            onClick={() => ref.current.close()}
+          >
+            Cancel
+          </button>
           <button value="ok">Add</button>
         </menu>
       </form>
