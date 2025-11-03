@@ -6,10 +6,10 @@ Front end for the Messaging App built with React.
 
 ```bash
 # Clone the repository
-git clone https://github.com/goran1010/template-vite-react-js.git
+git clone git@github.com:goran1010/messaging-app-web-client.git
 
 # Navigate to project directory
-cd template-vite-react-js
+cd messaging-app-web-client
 
 # Install dependencies
 npm install
